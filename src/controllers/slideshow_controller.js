@@ -4,8 +4,14 @@ export default class extends Controller {
   static targets = [ "slide" ]
 
   initialize() {
-    this.showSlide(0)
+    this.showCurrentSlide(0)
     console.log("initialize now")
+    console.log(this.data.get("index")) //data-controllerに付いているdata-slideshow-〇〇の値を取得
+    console.log(this.element.getAttribute("data-slideshow-index"))
+    console.log(this.data.has("index")) //trueかfalseを返す
+    console.log(this.data.has("index2"))
+    this.data.set("index", 2) //data-slideshow-〇〇の値をセット
+    console.log(this.data.get("index"))
   }
 
   connect() {
@@ -17,17 +23,25 @@ export default class extends Controller {
   }
 
   next() {
-    this.showSlide(this.index + 1)
+    this.index++
   }
 
   previous() {
-    this.showSlide(this.index - 1)
+    this.index--
   }
 
-  showSlide(index) {
-    this.index = index
+  showCurrentSlide() {
     this.slideTargets.forEach((el, i) => {
-      el.classList.toggle("slide--current", (Math.abs(index) % 4) == i)
+      el.classList.toggle("slide--current", (Math.abs(this.index) % 4) == i)
     })
+  }
+
+  get index() {
+    return parseInt(this.data.get("index"))
+  }
+
+  set index(value) {
+    this.data.set("index", value)
+    this.showCurrentSlide()
   }
 }
