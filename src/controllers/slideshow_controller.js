@@ -8,6 +8,14 @@ export default class extends Controller {
     console.log("initialize now")
   }
 
+  connect() {
+    console.log("connect now")
+  }
+
+  disconnect() {
+    console.log("disconnect now")
+  }
+
   next() {
     this.showSlide(this.index + 1)
   }
